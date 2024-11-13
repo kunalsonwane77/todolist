@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
 import "./list.css"
+import Taskinp from './components/Taskinp'
+import Dtask from './components/Dtask'
 
 
 
@@ -8,19 +10,20 @@ import "./list.css"
 
 function Todolist() {
 
-
-    let [text,uptext]=useState("")
+ 
+  let [text,uptext]=useState("")
     let [task,uptask]=useState([])
   
+
+
+
     function handlechange(e){
       let inp = e.target.value
-       
-      uptext(inp)
+     
+    uptext(inp)
+  }
 
-    
-    }
-
-    function handletask(){
+    function handletask(text){
         // console.log(text)
      
         let data={
@@ -33,8 +36,8 @@ function Todolist() {
 
         uptask([...task,data])
 
-        uptext("")
-
+        
+      uptext("")
 
     }
 
@@ -50,6 +53,9 @@ function Todolist() {
         })
 
         uptask(togglearry)
+
+
+        console.log(togglearry)
     }
 
 
@@ -82,9 +88,9 @@ function Todolist() {
     // console.log(edarr)
     
 
-    
      
     }
+
 
     function List(props) {
         return (
@@ -93,11 +99,8 @@ function Todolist() {
          <h1>{props.event} task is {props.status} </h1>
 
 
-         <div className='btncontainer'>
-
-         <button onClick={togleevent} value={props.id} id='tog'>Toggle</button>
-         <button onClick={deleteevent} value={props.id} id='del'>Delete</button>
-         <button onClick={edittask} value={props.id} id='edit'>Edit</button>
+         <div >
+               <Dtask  togleevent={togleevent} deleteevent={deleteevent} id={props.id} edittask={edittask}  />
 
          </div>
          
@@ -115,10 +118,12 @@ function Todolist() {
           <div className="list">
 
 
-            <h1>TO DO LIST</h1>
-            {/* {console.log(task)} */}
+            {/* <h1>TO DO LIST</h1>
+           
             <input type="text" name="" id="inpdata" value={text} onChange={handlechange} placeholder='Enter the task' />
-            <button onClick={handletask} className='submit'>Add to list</button>
+            <button onClick={handletask} className='submit'>Add to list</button> */}
+          <Taskinp  handletask={handletask} handlechange={handlechange} tdata={text}/>
+
         <div className='tasks'>
         {task.map((el)=>{
              return   <List event={el.work} key={el.id} id={el.id} status={el.status ? "complete":"incomplete" }/>
